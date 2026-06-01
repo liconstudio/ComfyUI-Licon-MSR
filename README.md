@@ -9,7 +9,7 @@ A ComfyUI custom node for creating fixed-frame MP4 reference videos from multipl
 
 ## Inputs
 
-- `1`: optional image
+- `1`: required image
 - `2`: optional image
 - `3`: optional image
 - `4`: optional image
