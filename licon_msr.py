@@ -9,13 +9,15 @@ except ImportError:
 
 
 class LiconMSR:
+    FRAME_COUNTS = (17, 25, 33, 41, 49, 57, 65)
+
     @classmethod
     def INPUT_TYPES(cls):
         return {
             "required": {
                 "width": ("INT", {"default": 736, "min": 32, "max": 8192, "step": 32}),
                 "height": ("INT", {"default": 1280, "min": 32, "max": 8192, "step": 32}),
-                "frame_count": ([17, 25, 33, 41, 49, 57, 65], {"default": 41}),
+                "frame_count": ([str(value) for value in cls.FRAME_COUNTS], {"default": "41"}),
             },
             "optional": {
                 "1": ("IMAGE",),
@@ -26,12 +28,26 @@ class LiconMSR:
             },
         }
 
+    @classmethod
+    def VALIDATE_INPUTS(cls, frame_count):
+        try:
+            frame_count = int(frame_count)
+        except (TypeError, ValueError):
+            return "frame_count must be one of: " + ", ".join(map(str, cls.FRAME_COUNTS))
+
+        if frame_count not in cls.FRAME_COUNTS:
+            return "frame_count must be one of: " + ", ".join(map(str, cls.FRAME_COUNTS))
+
+        return True
+
     RETURN_TYPES = ("IMAGE",)
     RETURN_NAMES = ("output",)
     FUNCTION = "create_video"
     CATEGORY = "Licon/MSR"
 
     def create_video(self, width, height, frame_count, background=None, **kwargs):
+        frame_count = int(frame_count)
+
         if background is None:
             raise ValueError("background input is required")
 

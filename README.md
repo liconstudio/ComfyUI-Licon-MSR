@@ -1,5 +1,11 @@
 # ComfyUI-Licon-MSR
 
+## Latest Bug Fix — New ComfyUI Compatibility
+
+- Fixed the `Value not in list` error for the `frame_count` property on newer ComfyUI frontends.
+- `frame_count` dropdown values are now serialized using ComfyUI's supported string-based `COMBO` format and converted back to integers before processing.
+- Existing workflows that store `frame_count` as an integer remain supported, while newer workflows that submit values such as `"25"` as strings now work correctly.
+
 A ComfyUI custom node for creating fixed-frame MP4 reference videos from multiple subject images and a background image, designed for LTX 2.3 MSR (Multiple-Subject-Reference) LoRA workflows.
 
 ## Latest Update
